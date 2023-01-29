@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 
 public class MainFrame extends JFrame{
 	
+	private Toolbar toolbar;
 	private TextPanel textPanel;
 	private JButton btn;
 
@@ -14,6 +15,7 @@ public class MainFrame extends JFrame{
 		super("Hello World");
 		setLayout(new BorderLayout());
 		
+		toolbar = new Toolbar();
 		textPanel = new TextPanel();
 		btn = new JButton("Click Me!");
 		
@@ -21,6 +23,7 @@ public class MainFrame extends JFrame{
 			textPanel.appendText("Hello!\n");
 		});
 		
+		add(toolbar, BorderLayout.NORTH);
 		add(textPanel, BorderLayout.CENTER);
 		add(btn, BorderLayout.SOUTH);
 		
