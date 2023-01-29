@@ -18,6 +18,10 @@ public class MainFrame extends JFrame{
 		textArea = new JTextArea();
 		btn = new JButton("Click Me!");
 		
+		btn.addActionListener(e -> {
+			textArea.append("Hello\n");
+		});
+		
 		add(textArea, BorderLayout.CENTER);
 		add(btn, BorderLayout.SOUTH);
 		
