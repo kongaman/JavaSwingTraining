@@ -9,6 +9,7 @@ public class MainFrame extends JFrame{
 	
 	private Toolbar toolbar;
 	private TextPanel textPanel;
+	private FormPanel formPanel;
 
 	public MainFrame()  {
 		super("Hello World");
@@ -16,6 +17,7 @@ public class MainFrame extends JFrame{
 		
 		toolbar = new Toolbar();
 		textPanel = new TextPanel();
+		formPanel = new FormPanel();
 		
 		toolbar.setStringListener(new StringListener() {
 			public void textEmitted(String text) {
@@ -24,6 +26,7 @@ public class MainFrame extends JFrame{
 		});
 		
 		add(toolbar, BorderLayout.NORTH);
+		add(formPanel, BorderLayout.WEST);
 		add(textPanel, BorderLayout.CENTER);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(600,500);
