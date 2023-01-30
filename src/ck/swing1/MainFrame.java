@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
 
+// Controller
 public class MainFrame extends JFrame{
 	
 	private Toolbar toolbar;
@@ -16,7 +17,11 @@ public class MainFrame extends JFrame{
 		toolbar = new Toolbar();
 		textPanel = new TextPanel();
 		
-		toolbar.setTextPanel(textPanel);
+		toolbar.setStringListener(new StringListener() {
+			public void textEmitted(String text) {
+				textPanel.appendText(text);
+			}
+		});
 		
 		add(toolbar, BorderLayout.NORTH);
 		add(textPanel, BorderLayout.CENTER);
