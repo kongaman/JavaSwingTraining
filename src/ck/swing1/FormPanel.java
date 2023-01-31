@@ -19,6 +19,7 @@ public class FormPanel extends JPanel {
 	private JTextField nameField;
 	private JTextField occupationField;
 	private JButton okBtn;
+	private FormListener formListener;
 
 	public FormPanel() {
 		Dimension dim = getPreferredSize();
@@ -34,6 +35,15 @@ public class FormPanel extends JPanel {
 		occupationField = new JTextField(10);
 		
 		okBtn = new JButton("OK");
+		okBtn.addActionListener(e -> {
+			String name = nameField.getText();
+			String occupation = occupationField.getText();
+			
+			FormEvent ev = new FormEvent(this, name, occupation);
+			if (formListener != null) {
+				formListener.formEventOccured(ev);
+			}
+		});
 		
 		setLayout(new GridBagLayout());
 		GridBagConstraints gc = new GridBagConstraints();
@@ -75,5 +85,9 @@ public class FormPanel extends JPanel {
 		gc.insets = new Insets(0, 0, 0, 0);
 		add(okBtn, gc);
 		
+	}
+
+	public void setFormListener(FormListener listener) {
+		this.formListener = listener;
 	}
 }
