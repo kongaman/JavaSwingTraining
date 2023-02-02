@@ -3,6 +3,9 @@ package ck.swing1;
 import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
 // Controller
 public class MainFrame extends JFrame{
@@ -18,6 +21,8 @@ public class MainFrame extends JFrame{
 		toolbar = new Toolbar();
 		textPanel = new TextPanel();
 		formPanel = new FormPanel();
+		
+		setJMenuBar(createMenuBar());
 		
 		toolbar.setStringListener(new StringListener() {
 			public void textEmitted(String text) {
@@ -51,6 +56,29 @@ public class MainFrame extends JFrame{
 		setVisible(true);
 	}
 	
+	private JMenuBar createMenuBar() {
+		JMenuBar menuBar = new JMenuBar();
+		
+		JMenu fileMenu = new JMenu("File");
+		JMenuItem exportDataItem = new JMenuItem("Export Data...");
+		JMenuItem importDataItem = new JMenuItem("Import Data...");
+		JMenuItem exitItem = new JMenuItem("Exit");
+		fileMenu.add(exportDataItem);
+		fileMenu.add(importDataItem);
+		fileMenu.addSeparator();
+		fileMenu.add(exitItem);
+		
+		JMenu windowMenu = new JMenu("Window");
+		JMenu showMenu = new JMenu("Show");
+		JMenuItem showFormItem = new JMenuItem("Person Form");
+		showMenu.add(showFormItem);
+		windowMenu.add(showMenu);
+		
+		menuBar.add(fileMenu);
+		menuBar.add(windowMenu);
+		
+		return menuBar;
+	}
 	
 
 }
