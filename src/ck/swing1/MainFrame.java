@@ -31,8 +31,15 @@ public class MainFrame extends JFrame{
 				String occupation = e.getOccupation();
 				int ageCat = e.getAgeCategory();
 				String empCat = e.getEmpCat();
+				boolean usCitizen = e.isUsCitizen();
+				String taxID = e.getTaxId();
+				String gender = e.getGender();
 				
-				textPanel.appendText(name + ": " + occupation + "  - " + ageCat + " " + empCat + " \n");
+				
+				textPanel.appendText(name + ": " + occupation + "\n");
+				textPanel.appendText("AgeCat: " + ageCat + " - Employment: " + empCat + "\n");
+				if (usCitizen) textPanel.appendText("is us citizen, tax id: " + taxID + "\n");
+				textPanel.appendText("Gender: " + gender + "\n");
 			}
 		});
 		
