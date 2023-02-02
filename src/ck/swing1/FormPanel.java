@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.KeyEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -56,6 +57,13 @@ public class FormPanel extends JPanel {
 		maleRadio = new JRadioButton("male");
 		femaleRadio = new JRadioButton("female");
 		genderGroup = new ButtonGroup();
+		okBtn = new JButton("OK");
+		
+		//Setup mnemonics
+		okBtn.setMnemonic(KeyEvent.VK_O);
+		
+		nameLabel.setDisplayedMnemonic(KeyEvent.VK_N);
+		nameLabel.setLabelFor(nameField);
 		
 		DefaultListModel<AgeCategory> ageModel = new DefaultListModel<>();
 		ageModel.addElement(new AgeCategory(0, "Under 18"));
@@ -89,7 +97,7 @@ public class FormPanel extends JPanel {
 		genderGroup.add(maleRadio);
 		genderGroup.add(femaleRadio);
 		
-		okBtn = new JButton("OK");
+		
 		okBtn.addActionListener(e -> {
 			String name = nameField.getText();
 			String occupation = occupationField.getText();
