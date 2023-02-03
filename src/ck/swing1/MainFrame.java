@@ -1,6 +1,7 @@
 package ck.swing1;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
@@ -9,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
 // Controller
@@ -44,7 +46,6 @@ public class MainFrame extends JFrame{
 				String taxID = e.getTaxId();
 				String gender = e.getGender();
 				
-				
 				textPanel.appendText(name + ": " + occupation + "\n");
 				textPanel.appendText("AgeCat: " + ageCat + " - Employment: " + empCat + "\n");
 				if (usCitizen) textPanel.appendText("is us citizen, tax id: " + taxID + "\n");
@@ -56,7 +57,8 @@ public class MainFrame extends JFrame{
 		add(formPanel, BorderLayout.WEST);
 		add(textPanel, BorderLayout.CENTER);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(600,500);
+		setMinimumSize(new Dimension(500, 400));
+		setSize(600, 500);
 		setVisible(true);
 	}
 	
@@ -91,7 +93,14 @@ public class MainFrame extends JFrame{
 		exitItem.setMnemonic(KeyEvent.VK_X);
 		exitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
 		
-		exitItem.addActionListener(e -> System.exit(0));
+		exitItem.addActionListener(e -> {
+			String text = JOptionPane.showInputDialog(MainFrame.this, "Enter your user name" , "Enter User Name",
+					JOptionPane.OK_OPTION | JOptionPane.QUESTION_MESSAGE);
+			System.out.println(text);
+			int action = JOptionPane.showConfirmDialog(MainFrame.this, "Do you really want to exit?" , "Confirm Exit",
+					JOptionPane.OK_CANCEL_OPTION);
+			if (action == JOptionPane.OK_OPTION) System.exit(0);
+		});
 		
 		return menuBar;
 	}
