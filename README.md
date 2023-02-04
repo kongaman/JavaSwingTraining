@@ -17,7 +17,8 @@ Für wen eignet sich dieser Kurs:
 * Java beginners who are OK with learning new stuff rapidly
 * Fluent Java programmers who want to learn desktop programming in Java
 
-Additional Tools
-https://www.eclipse.org/windowbuilder
+##### Additional Tools / Resources
 
-test
+[Windowbuilder Pro](https://www.eclipse.org/windowbuilder)
+
+[Visual Guide to Swing Components](https://web.mit.edu/6.005/www/sp14/psets/ps4/java-6-tutorial/components.html)
