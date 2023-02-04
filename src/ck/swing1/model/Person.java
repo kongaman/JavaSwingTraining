@@ -1,6 +1,8 @@
 package ck.swing1.model;
 
-public class Person {
+import java.io.Serializable;
+
+public class Person implements Serializable{
 	
 	private static int count = 0;
 	private int id;

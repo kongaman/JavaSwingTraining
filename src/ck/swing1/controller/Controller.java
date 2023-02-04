@@ -1,5 +1,7 @@
 package ck.swing1.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import ck.swing1.gui.FormEvent;
@@ -65,5 +67,12 @@ public class Controller {
 		Person person = new Person(name, occupation, ageCategory, empCategory, taxID, usCitizen, gender);
 		db.addPerson(person);
 	}
+	
+	public void saveToFile(File file) throws IOException {
+		db.saveToFile(file);
+	}
 
+	public void loadFromFile(File file) throws IOException {
+		db.loadFromFile(file);
+	}
 }
