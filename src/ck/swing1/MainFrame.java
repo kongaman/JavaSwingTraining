@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -19,6 +20,7 @@ public class MainFrame extends JFrame{
 	private Toolbar toolbar;
 	private TextPanel textPanel;
 	private FormPanel formPanel;
+	private JFileChooser fileChooser;
 
 	public MainFrame()  {
 		super("Hello World");
@@ -27,6 +29,7 @@ public class MainFrame extends JFrame{
 		toolbar = new Toolbar();
 		textPanel = new TextPanel();
 		formPanel = new FormPanel();
+		fileChooser = new JFileChooser();
 		
 		setJMenuBar(createMenuBar());
 		
@@ -93,10 +96,19 @@ public class MainFrame extends JFrame{
 		exitItem.setMnemonic(KeyEvent.VK_X);
 		exitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
 		
+		importDataItem.addActionListener(e -> {
+			if (fileChooser.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
+				System.out.println(fileChooser.getSelectedFile());
+			}
+		});
+		
+		exportDataItem.addActionListener(e -> {
+			if (fileChooser.showSaveDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
+				System.out.println(fileChooser.getSelectedFile());
+			}
+		});
+		
 		exitItem.addActionListener(e -> {
-			String text = JOptionPane.showInputDialog(MainFrame.this, "Enter your user name" , "Enter User Name",
-					JOptionPane.OK_OPTION | JOptionPane.QUESTION_MESSAGE);
-			System.out.println(text);
 			int action = JOptionPane.showConfirmDialog(MainFrame.this, "Do you really want to exit?" , "Confirm Exit",
 					JOptionPane.OK_CANCEL_OPTION);
 			if (action == JOptionPane.OK_OPTION) System.exit(0);
