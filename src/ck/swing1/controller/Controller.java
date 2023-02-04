@@ -1,5 +1,7 @@
 package ck.swing1.controller;
 
+import java.util.List;
+
 import ck.swing1.gui.FormEvent;
 import ck.swing1.model.AgeCategory;
 import ck.swing1.model.Database;
@@ -9,6 +11,10 @@ import ck.swing1.model.Person;
 
 public class Controller {
 	Database db = new Database();
+	
+	public List<Person> getPeople() {
+		return db.getPeople();
+	}
 	
 	public void addPerson(FormEvent ev) {
 		String name = ev.getName();
