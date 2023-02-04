@@ -1,4 +1,4 @@
-package ck.swing1;
+package ck.swing1.gui;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
