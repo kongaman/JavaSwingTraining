@@ -14,6 +14,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
+import ck.swing1.controller.Controller;
+
 // Controller
 public class MainFrame extends JFrame{
 	
@@ -21,6 +23,7 @@ public class MainFrame extends JFrame{
 	private TextPanel textPanel;
 	private FormPanel formPanel;
 	private JFileChooser fileChooser;
+	private Controller controller;
 
 	public MainFrame()  {
 		super("Hello World");
@@ -29,6 +32,8 @@ public class MainFrame extends JFrame{
 		toolbar = new Toolbar();
 		textPanel = new TextPanel();
 		formPanel = new FormPanel();
+		controller = new Controller();
+		
 		fileChooser = new JFileChooser();
 		fileChooser.addChoosableFileFilter(new PersonFileFilter());
 		fileChooser.setAcceptAllFileFilterUsed(false);
@@ -42,19 +47,8 @@ public class MainFrame extends JFrame{
 		});
 		
 		formPanel.setFormListener(new FormListener() {
-			public void formEventOccured(FormEvent e) {
-				String name = e.getName();
-				String occupation = e.getOccupation();
-				int ageCat = e.getAgeCategory();
-				String empCat = e.getEmpCat();
-				boolean usCitizen = e.isUsCitizen();
-				String taxID = e.getTaxId();
-				String gender = e.getGender();
-				
-				textPanel.appendText(name + ": " + occupation + "\n");
-				textPanel.appendText("AgeCat: " + ageCat + " - Employment: " + empCat + "\n");
-				if (usCitizen) textPanel.appendText("is us citizen, tax id: " + taxID + "\n");
-				textPanel.appendText("Gender: " + gender + "\n");
+			public void formEventOccured(FormEvent ev) {
+				controller.addPerson(ev);
 			}
 		});
 		
