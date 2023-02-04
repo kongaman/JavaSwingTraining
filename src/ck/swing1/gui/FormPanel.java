@@ -89,6 +89,9 @@ public class FormPanel extends JPanel {
 			boolean isTicked = citizenCheck.isSelected();
 			taxLabel.setEnabled(isTicked);
 			taxField.setEnabled(isTicked);
+			if(!taxField.isEnabled()) {
+				taxField.setText("");
+			}
 		});
 		
 		maleRadio.setActionCommand("male");
@@ -113,12 +116,23 @@ public class FormPanel extends JPanel {
 			if (formListener != null) {
 				formListener.formEventOccured(ev);
 			}
+			clearform();
 		});
 		
 		layoutComponents();
 		
 	}
 	
+	private void clearform() {
+		nameField.setText("");
+		occupationField.setText("");
+		ageList.setSelectedIndex(1);
+		empCombo.setSelectedIndex(0);
+		citizenCheck.setSelected(false);
+		taxField.setText("");
+		maleRadio.setSelected(true);
+	}
+
 	public void layoutComponents() {
 		setLayout(new GridBagLayout());
 		GridBagConstraints gc = new GridBagConstraints();
