@@ -3,7 +3,6 @@ package ck.swing1.gui;
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.List;
 
 import javax.swing.JMenuItem;
@@ -19,6 +18,7 @@ public class TablePanel extends JPanel {
 	private JTable table;
 	private PersonTableModel tableModel;
 	private JPopupMenu popUp;
+	private PersonTableListener personTableListener;
 	
 	public TablePanel() {
 		tableModel = new PersonTableModel();
@@ -26,8 +26,15 @@ public class TablePanel extends JPanel {
 		
 		popUp = new JPopupMenu();
 		JMenuItem removeItem = new JMenuItem("Delete row");
+		
 		removeItem.addActionListener(e -> {
 			int row = table.getSelectedRow();
+			
+			if (personTableListener != null) {
+				personTableListener.rowDeleted(row);
+				tableModel.fireTableRowsDeleted(row, row);
+			}
+			
 		});
 		popUp.add(removeItem);
 		
@@ -55,6 +62,10 @@ public class TablePanel extends JPanel {
 	public void refresh() {
 		tableModel.fireTableDataChanged();
 		
+	}
+
+	public void setPersonTableListener(PersonTableListener listener) {
+		this.personTableListener = listener;
 	}
 
 }
