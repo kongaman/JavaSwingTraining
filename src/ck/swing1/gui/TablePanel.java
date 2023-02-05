@@ -26,11 +26,19 @@ public class TablePanel extends JPanel {
 		
 		popUp = new JPopupMenu();
 		JMenuItem removeItem = new JMenuItem("Delete row");
+		removeItem.addActionListener(e -> {
+			int row = table.getSelectedRow();
+		});
 		popUp.add(removeItem);
+		
 		
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
+				
+				int row = table.rowAtPoint(e.getPoint());
+				table.getSelectionModel().setSelectionInterval(row, row);
+				
 				if (e.getButton() == MouseEvent.BUTTON3)
 				popUp.show(table, e.getX(), e.getY());
 			}
