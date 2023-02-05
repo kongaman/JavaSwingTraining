@@ -2,9 +2,12 @@ package ck.swing1.model;
 
 import java.io.Serializable;
 
-public class Person implements Serializable{
+public class Person implements Serializable {
 	
+	private static final long serialVersionUID = 2312315359837142356L;
+
 	private static int count = 0;
+	
 	private int id;
 	private String name;
 	private String occupation;
