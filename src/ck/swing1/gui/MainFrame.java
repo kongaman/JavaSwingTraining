@@ -64,7 +64,7 @@ public class MainFrame extends JFrame{
 		add(tablePanel, BorderLayout.CENTER);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setMinimumSize(new Dimension(500, 400));
-		setSize(600, 500);
+		setSize(1000, 500);
 		setVisible(true);
 	}
 	
