@@ -1,6 +1,8 @@
 package ck.swing1.gui;
 
-public interface StringListener {
+import java.util.EventListener;
+
+public interface StringListener extends EventListener{
 	
 	public void textEmitted(String text);
 
