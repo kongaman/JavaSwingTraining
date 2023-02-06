@@ -60,7 +60,7 @@ public class MainFrame extends JFrame{
 		});
 		
 		String user = prefs.get("user", "");
-		String password = prefs.get("passowrd", "");
+		String password = prefs.get("password", "");
 		int port = prefs.getInt("port", 3306);
 		prefsDialog.setDefaults(user, password, port);
 		
