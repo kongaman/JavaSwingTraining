@@ -108,6 +108,7 @@ public class MainFrame extends JFrame{
 		JMenu showMenu = new JMenu("Show");
 		
 		JMenuItem prefsItem = new JMenuItem("Preferences...");
+		prefsItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.CTRL_MASK));
 		prefsItem.addActionListener(e -> {
 			prefsDialog.setVisible(true);
 		});
