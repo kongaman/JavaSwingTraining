@@ -2,6 +2,7 @@ package ck.swing1.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 import ck.swing1.gui.FormEvent;
@@ -71,6 +72,22 @@ public class Controller {
 	public void removePerson(int index) {
 		db.removePerson(index);
 		
+	}
+	
+	public void connect() throws Exception {
+		db.connect();
+	}
+	
+	public void save() throws SQLException {
+		db.save();
+	}
+	
+	public void load() throws SQLException {
+		db.load();
+	}
+	
+	public void close() {
+		db.disconnect();
 	}
 	
 	public void saveToFile(File file) throws IOException {
