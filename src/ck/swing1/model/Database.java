@@ -57,6 +57,9 @@ public class Database {
 		String insertSql = "insert into swingtest.people(id, name, age, employment_status, tax_id, us_citizen, gender, occupation)"
 				+ " value (?, ?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement insertStmt = conn.prepareStatement(insertSql);
+		String updateSql = "update swingtest.people set name = ?, age = ?, employment_status = ?, tax_id = ?, us_citizen = ?, gender = ?, "
+				+ "occupation = ? where id = ?";
+		PreparedStatement updateStmt = conn.prepareStatement(updateSql);
 		for (Person person : people) {
 			int id = person.getId();
 			String name = person.getName();
@@ -88,8 +91,20 @@ public class Database {
 				insertStmt.executeUpdate();
 			} else {
 				System.out.println("Updating person with id: " + id);
+				int col = 1;
+				updateStmt.setString(col++, name);
+				updateStmt.setString(col++, ageCategory.name());
+				updateStmt.setString(col++, empCat.name());
+				updateStmt.setString(col++, taxId);
+				updateStmt.setBoolean(col++, usCitizen);
+				updateStmt.setString(col++, gender.name());
+				updateStmt.setString(col++, occupation);
+				updateStmt.setInt(col++, id);
+				
+				updateStmt.executeUpdate();
 			}
 		}
+		updateStmt.close();
 		insertStmt.close();
 		checkStmt.close();
 	}

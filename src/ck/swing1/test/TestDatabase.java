@@ -12,8 +12,8 @@ public class TestDatabase {
 		System.out.println("Running database test");
 		
 		Database db = new Database();
-		db.addPerson(new Person("Chris", "software", AgeCategory.adult, EmploymentCategory.employed, "777", true, Gender.male));
-		db.addPerson(new Person("Schnucki", "AOK", AgeCategory.senior, EmploymentCategory.selfEmployed, null, false, Gender.male));
+		db.addPerson(new Person("Chris", "lion tamer", AgeCategory.adult, EmploymentCategory.employed, "777", true, Gender.male));
+		db.addPerson(new Person("Schnucki", "AOK", AgeCategory.adult, EmploymentCategory.selfEmployed, null, false, Gender.female));
 		try {
 			db.connect();
 			db.save();
