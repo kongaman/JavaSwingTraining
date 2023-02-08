@@ -16,7 +16,8 @@ public class TestDatabase {
 		db.addPerson(new Person("Schnucki", "AOK", AgeCategory.adult, EmploymentCategory.selfEmployed, null, false, Gender.female));
 		try {
 			db.connect();
-			db.save();
+			db.load();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
