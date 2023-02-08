@@ -4,6 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.prefs.Preferences;
@@ -102,10 +105,21 @@ public class MainFrame extends JFrame{
 			}
 		});
 		
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				System.out.println("Window closing");
+				controller.disconnect();
+				dispose();
+				System.gc();
+			}
+			
+		});
+		
 		add(toolbar, BorderLayout.NORTH);
 		add(formPanel, BorderLayout.WEST);
 		add(tablePanel, BorderLayout.CENTER);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setMinimumSize(new Dimension(500, 400));
 		setSize(1000, 500);
 		setVisible(true);
@@ -186,7 +200,12 @@ public class MainFrame extends JFrame{
 		exitItem.addActionListener(e -> {
 			int action = JOptionPane.showConfirmDialog(MainFrame.this, "Do you really want to exit?" , "Confirm Exit",
 					JOptionPane.OK_CANCEL_OPTION);
-			if (action == JOptionPane.OK_OPTION) System.exit(0);
+			if (action == JOptionPane.OK_OPTION) {
+				WindowListener[] windowListeners = getWindowListeners();
+				for (WindowListener listener : windowListeners) {
+					listener.windowClosing(new WindowEvent(MainFrame.this, 0));
+				}
+			}
 		});
 		
 		return menuBar;

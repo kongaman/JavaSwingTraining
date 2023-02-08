@@ -86,7 +86,7 @@ public class Controller {
 		db.load();
 	}
 	
-	public void close() {
+	public void disconnect() {
 		db.disconnect();
 	}
 	
