@@ -8,11 +8,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+
 
 public class Database {
 	
@@ -44,6 +47,21 @@ public class Database {
 				System.out.println("Can't close connection");
 				e.printStackTrace();
 			}
+		}
+	}
+	
+	public void save() throws SQLException {
+		
+		String checkSql = "select count(*) as count from swingtest.people where id=?";
+		
+		PreparedStatement checkStmt = conn.prepareStatement(checkSql);
+		for (Person person : people) {
+			int id = person.getId();
+			checkStmt.setInt(1, id);
+			ResultSet checkResultSet =  checkStmt.executeQuery();
+			checkResultSet.next();
+			int count = checkResultSet.getInt(1);
+			System.out.println("Count for person with ID: " + id + " is " + count);
 		}
 	}
 	
@@ -87,5 +105,23 @@ public class Database {
 		
 		ois.close();
 	}
+	
+	//MYSQL Database
+	
+   // CREATE DATABASE `swingtest` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */
+/**
+   CREATE TABLE `people` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `age` enum('child','adult','senior') NOT NULL,
+  `employment_status` varchar(45) NOT NULL,
+  `tax_id` varchar(45) DEFAULT NULL,
+  `us_citizen` tinyint NOT NULL,
+  `gender` enum('male','female') NOT NULL,
+  `occupation` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+ */
+	
 	
 }
