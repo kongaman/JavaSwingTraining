@@ -9,8 +9,9 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JToolBar;
 
-public class Toolbar extends JPanel implements ActionListener {
+public class Toolbar extends JToolBar implements ActionListener {
 	
 	private JButton saveButton;
 	private JButton refreshButton;
@@ -18,16 +19,19 @@ public class Toolbar extends JPanel implements ActionListener {
 	
 	public Toolbar() {
 		
-		setBorder(BorderFactory.createEtchedBorder());
-		saveButton = new JButton("Save");
+		//setBorder(BorderFactory.createEtchedBorder());
+		saveButton = new JButton();
 		saveButton.addActionListener(this);
 		saveButton.setIcon(createIcon("/ck/swing1/images/Save16.gif"));
-		refreshButton = new JButton("Refresh");
+		saveButton.setToolTipText("Save");
+		
+		refreshButton = new JButton();
 		refreshButton.addActionListener(this);
 		refreshButton.setIcon(createIcon("/ck/swing1/images/Refresh16.gif"));
+		refreshButton.setToolTipText("Refresh");
 		
-		setLayout(new FlowLayout(FlowLayout.LEFT));
 		add(saveButton);
+		//addSeparator();
 		add(refreshButton);
 		
 	}
