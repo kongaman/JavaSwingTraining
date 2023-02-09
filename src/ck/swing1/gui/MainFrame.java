@@ -47,7 +47,6 @@ public class MainFrame extends JFrame{
 		controller = new Controller();
 		
 		tablePanel.setData(controller.getPeople());
-		
 		tablePanel.setPersonTableListener(new PersonTableListener() {
 			public void rowDeleted(int row) {
 				controller.removePerson(row);
@@ -185,7 +184,6 @@ public class MainFrame extends JFrame{
 				}
 			}
 		});
-		
 		exportDataItem.addActionListener(e -> {
 			if (fileChooser.showSaveDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
 				try {
@@ -196,7 +194,6 @@ public class MainFrame extends JFrame{
 				}
 			}
 		});
-		
 		exitItem.addActionListener(e -> {
 			int action = JOptionPane.showConfirmDialog(MainFrame.this, "Do you really want to exit?" , "Confirm Exit",
 					JOptionPane.OK_CANCEL_OPTION);
@@ -207,8 +204,6 @@ public class MainFrame extends JFrame{
 				}
 			}
 		});
-		
 		return menuBar;
 	}
-
 }
