@@ -18,6 +18,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JSplitPane;
 import javax.swing.KeyStroke;
 
 import ck.swing1.controller.Controller;
@@ -32,6 +33,7 @@ public class MainFrame extends JFrame{
 	private TablePanel tablePanel;
 	private PrefsDialog prefsDialog;
 	private Preferences prefs;
+	private JSplitPane splitPane;
 
 	public MainFrame()  {
 		super("Hello World");
@@ -43,6 +45,9 @@ public class MainFrame extends JFrame{
 		tablePanel = new TablePanel();
 		prefsDialog = new PrefsDialog(this);
 		prefs = Preferences.userRoot().node("db");
+		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, formPanel, tablePanel);
+		
+		splitPane.setOneTouchExpandable(true);
 		
 		controller = new Controller();
 		
@@ -116,8 +121,9 @@ public class MainFrame extends JFrame{
 		});
 		
 		add(toolbar, BorderLayout.PAGE_START);
-		add(formPanel, BorderLayout.WEST);
-		add(tablePanel, BorderLayout.CENTER);
+		add(splitPane, BorderLayout.CENTER);
+//		add(formPanel, BorderLayout.WEST);
+//		add(tablePanel, BorderLayout.CENTER);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setMinimumSize(new Dimension(500, 400));
 		setSize(1000, 500);
@@ -165,6 +171,9 @@ public class MainFrame extends JFrame{
 		
 		showFormItem.addActionListener(e -> {
 			JCheckBoxMenuItem menuItem = (JCheckBoxMenuItem) e.getSource();
+			if(menuItem.isSelected()) {
+				splitPane.setDividerLocation(formPanel.getMinimumSize().width);
+			}
 			formPanel.setVisible(menuItem.isSelected());
 		});
 		
