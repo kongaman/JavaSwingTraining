@@ -22,28 +22,18 @@ public class Toolbar extends JToolBar implements ActionListener {
 		//setBorder(BorderFactory.createEtchedBorder());
 		saveButton = new JButton();
 		saveButton.addActionListener(this);
-		saveButton.setIcon(createIcon("/ck/swing1/images/Save16.gif"));
+		saveButton.setIcon(Utils.createIcon("/ck/swing1/images/Save16.gif"));
 		saveButton.setToolTipText("Save");
 		
 		refreshButton = new JButton();
 		refreshButton.addActionListener(this);
-		refreshButton.setIcon(createIcon("/ck/swing1/images/Refresh16.gif"));
+		refreshButton.setIcon(Utils.createIcon("/ck/swing1/images/Refresh16.gif"));
 		refreshButton.setToolTipText("Refresh");
 		
 		add(saveButton);
 		//addSeparator();
 		add(refreshButton);
 		
-	}
-	
-	private ImageIcon createIcon(String path) {
-		URL url = getClass().getResource(path);
-		if (url == null) {
-			System.err.println("Unable to load image: " + path);	
-		}
-		
-		ImageIcon imageIcon = new ImageIcon(url);
-		return imageIcon;
 	}
 	
 	public void setToolbarListener(ToolbarListener listener) {

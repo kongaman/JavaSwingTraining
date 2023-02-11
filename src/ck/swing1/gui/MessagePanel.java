@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeSelectionModel;
 
 class Serverinfo {
@@ -28,10 +29,18 @@ class Serverinfo {
 public class MessagePanel extends JPanel {
 	
 	private JTree serverTree;
+	private DefaultTreeCellRenderer treeCellRenderer;
 	
 	public MessagePanel() {
 		
+		treeCellRenderer = new DefaultTreeCellRenderer();
+		
+		treeCellRenderer.setLeafIcon(Utils.createIcon("/ck/swing1/images/Server16.gif"));
+		treeCellRenderer.setOpenIcon(Utils.createIcon("/ck/swing1/images/WebComponent16.gif"));
+		treeCellRenderer.setClosedIcon(Utils.createIcon("/ck/swing1/images/WebComponentAdd16.gif"));
+		
 		serverTree = new JTree(createTree());
+		serverTree.setCellRenderer(treeCellRenderer);
 	
 		serverTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		
@@ -75,5 +84,4 @@ public class MessagePanel extends JPanel {
 		
 		return top;
 	}
-
 }
