@@ -8,6 +8,23 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 
+class Serverinfo {
+	private String name;
+	private int id;
+	
+	public Serverinfo(String name, int id) {
+		this.name = name;
+		this.id = id;
+	}
+	public int getId() {
+		return id;
+	}
+	@Override
+	public String toString() {
+		return name;
+	}
+}
+
 public class MessagePanel extends JPanel {
 	
 	private JTree serverTree;
@@ -21,6 +38,10 @@ public class MessagePanel extends JPanel {
 		serverTree.addTreeSelectionListener(e -> {
 			DefaultMutableTreeNode node = (DefaultMutableTreeNode) serverTree.getLastSelectedPathComponent();
 			Object userObject = node.getUserObject();
+			if(userObject instanceof Serverinfo) {
+				int id = ((Serverinfo) userObject).getId();
+				System.out.println("UserObject with id: " + id);
+			}
 			System.out.println(userObject);
 		});
 		
@@ -34,13 +55,13 @@ public class MessagePanel extends JPanel {
 		DefaultMutableTreeNode top = new DefaultMutableTreeNode("Servers");
 		
 		DefaultMutableTreeNode branch1 = new DefaultMutableTreeNode("USA");
-		DefaultMutableTreeNode server1 = new DefaultMutableTreeNode("New York");
-		DefaultMutableTreeNode server2 = new DefaultMutableTreeNode("Boston");
-		DefaultMutableTreeNode server3 = new DefaultMutableTreeNode("Los Angeles");
+		DefaultMutableTreeNode server1 = new DefaultMutableTreeNode(new Serverinfo("New York", 0));
+		DefaultMutableTreeNode server2 = new DefaultMutableTreeNode(new Serverinfo("Boston", 1));
+		DefaultMutableTreeNode server3 = new DefaultMutableTreeNode(new Serverinfo("Los Angeles",2 ));
 		
 		DefaultMutableTreeNode branch2 = new DefaultMutableTreeNode("UK");
-		DefaultMutableTreeNode server4 = new DefaultMutableTreeNode("London");
-		DefaultMutableTreeNode server5 = new DefaultMutableTreeNode("Endinburgh");
+		DefaultMutableTreeNode server4 = new DefaultMutableTreeNode(new Serverinfo("London", 3));
+		DefaultMutableTreeNode server5 = new DefaultMutableTreeNode(new Serverinfo("Endinburgh", 4));
 		
 		branch1.add(server1);
 		branch1.add(server2);
