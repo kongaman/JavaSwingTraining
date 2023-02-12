@@ -5,34 +5,10 @@ import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
+import javax.swing.event.CellEditorListener;
+import javax.swing.event.ChangeEvent;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeSelectionModel;
-
-class ServerInfo {
-	private String name;
-	private int id;
-	private boolean checked;
-	
-	public ServerInfo(String name, int id, boolean checked) {
-		this.name = name;
-		this.id = id;
-		this.checked = checked;
-	}
-	public int getId() {
-		return id;
-	}
-	public boolean ischecked() {
-		return checked;
-	}
-	public void setChecked(boolean checked) {
-		this.checked = checked;
-	}
-	@Override
-	public String toString() {
-		return name;
-	}
-}
 
 public class MessagePanel extends JPanel {
 	
@@ -52,10 +28,16 @@ public class MessagePanel extends JPanel {
 	
 		serverTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		
-		serverTree.addTreeSelectionListener(e -> {
-			DefaultMutableTreeNode node = (DefaultMutableTreeNode) serverTree.getLastSelectedPathComponent();
-			Object userObject = node.getUserObject();
-			System.out.println(userObject);
+		treeCellEditor.addCellEditorListener(new CellEditorListener() {
+			@Override
+			public void editingStopped(ChangeEvent e) {
+				ServerInfo info = (ServerInfo) treeCellEditor.getCellEditorValue();
+				System.out.println(info + ": " + info.getId() + "; " + info.ischecked());
+			}
+			
+			@Override
+			public void editingCanceled(ChangeEvent e) {
+			}
 		});
 		
 		setLayout(new BorderLayout());

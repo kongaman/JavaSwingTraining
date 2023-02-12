@@ -51,7 +51,7 @@ public class ServerTreeCellEditor extends AbstractCellEditor implements TreeCell
 					checkBox.removeItemListener(this);
 				}
 			};
-			checkBox.addItemListener(null);
+			checkBox.addItemListener(itemListener);
 		}
 		return component;
 	}
