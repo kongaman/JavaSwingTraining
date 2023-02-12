@@ -39,7 +39,7 @@ public class ServerTreeCellRenderer implements TreeCellRenderer {
 			boolean leaf, int row, boolean hasFocus) {
 		if(leaf) {
 			DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
-			Serverinfo nodeInfo = (Serverinfo) node.getUserObject();
+			ServerInfo nodeInfo = (ServerInfo) node.getUserObject();
 			if(selected) {
 				leafRenderer.setForeground(selectionForeground);
 				leafRenderer.setBackground(selectionBackground);
