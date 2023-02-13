@@ -1,6 +1,7 @@
 package ck.swing1.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Window;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -10,6 +11,7 @@ import java.util.concurrent.ExecutionException;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
+import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
@@ -27,9 +29,11 @@ public class MessagePanel extends JPanel {
 	
 	private Set<Integer> selectedServers;
 	private MessageServer messageServer;
+	private ProgressDialog progressDialog;
 	
 	public MessagePanel() {
 		
+		progressDialog = new ProgressDialog((Window) getParent());
 		messageServer = new MessageServer();
 		selectedServers = new TreeSet<>();
 		selectedServers.add(0);
@@ -75,6 +79,10 @@ public class MessagePanel extends JPanel {
 	
 	private void retrieveMessages() {
 		
+		SwingUtilities.invokeLater(() -> {
+			progressDialog.setVisible(true);
+		});
+		
 		System.out.println("Messages waiting: " + messageServer.getMessageCount());
 		
 		SwingWorker<List<Message>, Integer> worker = new SwingWorker<List<Message>, Integer>(){
@@ -108,7 +116,7 @@ public class MessagePanel extends JPanel {
 				} catch (ExecutionException e) {
 					e.printStackTrace();
 				}
-				super.done();
+				progressDialog.setVisible(false);
 			}
 		};
 		worker.execute();
