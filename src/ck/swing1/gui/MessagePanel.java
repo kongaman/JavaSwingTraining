@@ -1,12 +1,16 @@
 package ck.swing1.gui;
 
 import java.awt.BorderLayout;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.ExecutionException;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
+import javax.swing.SwingWorker;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -54,11 +58,8 @@ public class MessagePanel extends JPanel {
 					selectedServers.remove(serverId);
 				}
 				messageServer.setSelectedServers(selectedServers);
-				System.out.println("Messages waiting: " + messageServer.getMessageCount());
 				
-				for(Message message : messageServer) {
-					System.out.println(message.getTitle());
-				}
+				retrieveMessages();
 			}
 			
 			@Override
@@ -71,6 +72,48 @@ public class MessagePanel extends JPanel {
 		add(new JScrollPane(serverTree), BorderLayout.CENTER);
 		
 	}
+	
+	private void retrieveMessages() {
+		
+		System.out.println("Messages waiting: " + messageServer.getMessageCount());
+		
+		SwingWorker<List<Message>, Integer> worker = new SwingWorker<List<Message>, Integer>(){
+			@Override
+			protected List<Message> doInBackground() throws Exception {
+				List<Message> retrievedMessages = new ArrayList<>();
+				int count = 0;
+				for(Message message : messageServer) {
+					System.out.println(message.getTitle());
+					retrievedMessages.add(message);
+					count++;
+					publish(count);
+				}
+				return retrievedMessages;
+			}
+
+			@Override
+			protected void process(List<Integer> counts) {
+				// receives whatever object you publish() in doInBackground() (List of second argument specified in SwingWorker<>)
+				int retrieved = counts.get(counts.size() - 1);
+				System.out.println("Got " + retrieved + " messages.");
+			}
+
+			@Override
+			protected void done() {
+				try {
+					List<Message> retrievedMessages = get(); //get() returns the first argument specified in SwingWorker<> (List<Message> here)
+					System.out.println("Retrieved " + retrievedMessages.size() + " messages");
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+					e.printStackTrace();
+				}
+				super.done();
+			}
+		};
+		worker.execute();
+	}
+
 	
 	private DefaultMutableTreeNode createTree() {
 		DefaultMutableTreeNode top = new DefaultMutableTreeNode("Servers");
