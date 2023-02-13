@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.ExecutionException;
 
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
@@ -31,9 +32,9 @@ public class MessagePanel extends JPanel {
 	private MessageServer messageServer;
 	private ProgressDialog progressDialog;
 	
-	public MessagePanel() {
+	public MessagePanel(JFrame parent) {
 		
-		progressDialog = new ProgressDialog((Window) getParent());
+		progressDialog = new ProgressDialog(parent);
 		messageServer = new MessageServer();
 		selectedServers = new TreeSet<>();
 		selectedServers.add(0);
@@ -79,11 +80,9 @@ public class MessagePanel extends JPanel {
 	
 	private void retrieveMessages() {
 		
-		SwingUtilities.invokeLater(() -> {
-			progressDialog.setVisible(true);
-		});
+		progressDialog.setMaximum(messageServer.getMessageCount());
 		
-		System.out.println("Messages waiting: " + messageServer.getMessageCount());
+		progressDialog.setVisible(true);
 		
 		SwingWorker<List<Message>, Integer> worker = new SwingWorker<List<Message>, Integer>(){
 			@Override
@@ -103,7 +102,7 @@ public class MessagePanel extends JPanel {
 			protected void process(List<Integer> counts) {
 				// receives whatever object you publish() in doInBackground() (List of second argument specified in SwingWorker<>)
 				int retrieved = counts.get(counts.size() - 1);
-				System.out.println("Got " + retrieved + " messages.");
+				progressDialog.setValue(retrieved);
 			}
 
 			@Override
