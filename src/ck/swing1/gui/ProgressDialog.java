@@ -15,11 +15,13 @@ public class ProgressDialog extends JDialog {
 	private JProgressBar progressBar;
 	
 	public ProgressDialog(Window parent) {
-		super(parent, "Messages downloading", ModalityType.APPLICATION_MODAL);
+		super(parent, "Messages downloading...", ModalityType.APPLICATION_MODAL);
 		setSize(400, 200);
 		
 		cancelButton = new JButton("Cancel");
 		progressBar = new JProgressBar();
+		progressBar.setStringPainted(true);
+		progressBar.setString("Retrieving Messages");
 		
 		setLayout(new FlowLayout());
 		
@@ -40,6 +42,9 @@ public class ProgressDialog extends JDialog {
 	}
 	
 	public void setValue (int value) {
+		int progress = 100 * value/progressBar.getMaximum();
+		String prozent = String.format("%d%% complete", progress);
+		progressBar.setString("Downloading Message " + value + " of " + progressBar.getMaximum() + " (" + prozent + ")");
 		progressBar.setValue(value);
 	}
 
