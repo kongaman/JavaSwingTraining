@@ -55,6 +55,13 @@ public class MainFrame extends JFrame{
 		tabPane.addTab("Person Database", tablePanel);
 		tabPane.addTab("Messages", messagePanel);
 		
+		tabPane.addChangeListener(e -> {
+			int tabIndex = tabPane.getSelectedIndex();
+			if (tabIndex == 1) {
+				messagePanel.refresh();
+			}
+		});
+		
 		
 		
 		controller = new Controller();
@@ -125,13 +132,10 @@ public class MainFrame extends JFrame{
 				dispose();
 				System.gc();
 			}
-			
 		});
 		
 		add(toolbar, BorderLayout.PAGE_START);
 		add(splitPane, BorderLayout.CENTER);
-//		add(formPanel, BorderLayout.WEST);
-//		add(tablePanel, BorderLayout.CENTER);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setMinimumSize(new Dimension(500, 400));
 		setSize(1000, 500);

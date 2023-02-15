@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.ExecutionException;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -37,11 +38,14 @@ public class MessagePanel extends JPanel implements ProgressDialogListener {
 	private SwingWorker<List<Message>, Integer> worker;
 	
 	private TextPanel textPanel;
-	private JList<?> messageList;
+	private JList<String> messageList;
 	private JSplitPane upperPane;
 	private JSplitPane lowerPane;
+	private DefaultListModel<String> messageListModel;
 	
 	public MessagePanel(JFrame parent) {
+		
+		messageListModel = new DefaultListModel<>();
 		
 		progressDialog = new ProgressDialog(parent, "Messages downloading...");
 		messageServer = new MessageServer();
@@ -63,6 +67,8 @@ public class MessagePanel extends JPanel implements ProgressDialogListener {
 		serverTree.setEditable(true);
 	
 		serverTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+		
+		messageServer.setSelectedServers(selectedServers);
 		
 		treeCellEditor.addCellEditorListener(new CellEditorListener() {
 			@Override
@@ -87,9 +93,9 @@ public class MessagePanel extends JPanel implements ProgressDialogListener {
 		setLayout(new BorderLayout());
 		
 		textPanel = new TextPanel();
-		messageList = new JList<>();
+		messageList = new JList<>(messageListModel);
 		
-		lowerPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, messageList, textPanel);
+		lowerPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new JScrollPane(messageList), textPanel);
 		upperPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new JScrollPane(serverTree), lowerPane);
 		
 		textPanel.setMinimumSize(new Dimension(0, 150));
@@ -99,7 +105,10 @@ public class MessagePanel extends JPanel implements ProgressDialogListener {
 		upperPane.setResizeWeight(0.5);
 		
 		add(upperPane, BorderLayout.CENTER);
-		
+	}
+	
+	public void refresh() {
+		retrieveMessages();
 	}
 	
 	private void retrieveMessages() {
@@ -115,7 +124,6 @@ public class MessagePanel extends JPanel implements ProgressDialogListener {
 				int count = 0;
 				for(Message message : messageServer) {
 					if (isCancelled()) break;
-					System.out.println(message.getTitle());
 					retrievedMessages.add(message);
 					count++;
 					publish(count);
@@ -136,7 +144,10 @@ public class MessagePanel extends JPanel implements ProgressDialogListener {
 				if (isCancelled()) return;
 				try {
 					List<Message> retrievedMessages = get(); //get() returns the first argument specified in SwingWorker<> (List<Message> here)
-					System.out.println("Retrieved " + retrievedMessages.size() + " messages");
+					messageListModel.removeAllElements();
+					for (Message message : retrievedMessages) {
+						messageListModel.addElement(message.getTitle());
+					}
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				} catch (ExecutionException e) {
