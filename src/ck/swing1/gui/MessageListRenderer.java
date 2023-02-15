@@ -35,7 +35,6 @@ public class MessageListRenderer implements ListCellRenderer<Message> {
 		label.setIcon(Utils.createIcon("/ck/swing1/images/Information24.gif"));
 		panel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		panel.add(label);
-		
 	}
 
 	@Override
