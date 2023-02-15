@@ -22,7 +22,7 @@ import javax.swing.tree.TreeSelectionModel;
 import ck.swing1.controller.MessageServer;
 import ck.swing1.model.Message;
 
-public class MessagePanel extends JPanel {
+public class MessagePanel extends JPanel implements ProgressDialogListener {
 	
 	private JTree serverTree;
 	private ServerTreeCellRenderer treeCellRenderer;
@@ -31,11 +31,15 @@ public class MessagePanel extends JPanel {
 	private Set<Integer> selectedServers;
 	private MessageServer messageServer;
 	private ProgressDialog progressDialog;
+	private SwingWorker<List<Message>, Integer> worker;
 	
 	public MessagePanel(JFrame parent) {
 		
-		progressDialog = new ProgressDialog(parent);
+		progressDialog = new ProgressDialog(parent, "Messages downloading...");
 		messageServer = new MessageServer();
+		
+		progressDialog.setListener(this);
+		
 		selectedServers = new TreeSet<>();
 		selectedServers.add(0);
 		selectedServers.add(1);
@@ -84,12 +88,13 @@ public class MessagePanel extends JPanel {
 		
 		progressDialog.setVisible(true);
 		
-		SwingWorker<List<Message>, Integer> worker = new SwingWorker<List<Message>, Integer>(){
+		worker = new SwingWorker<List<Message>, Integer>(){
 			@Override
 			protected List<Message> doInBackground() throws Exception {
 				List<Message> retrievedMessages = new ArrayList<>();
 				int count = 0;
 				for(Message message : messageServer) {
+					if (isCancelled()) break;
 					System.out.println(message.getTitle());
 					retrievedMessages.add(message);
 					count++;
@@ -107,6 +112,8 @@ public class MessagePanel extends JPanel {
 
 			@Override
 			protected void done() {
+				progressDialog.setVisible(false);
+				if (isCancelled()) return;
 				try {
 					List<Message> retrievedMessages = get(); //get() returns the first argument specified in SwingWorker<> (List<Message> here)
 					System.out.println("Retrieved " + retrievedMessages.size() + " messages");
@@ -145,5 +152,12 @@ public class MessagePanel extends JPanel {
 		top.add(branch2);
 		
 		return top;
+	}
+
+	@Override
+	public void progressDialogCanceled() {
+		if (worker != null) {
+			worker.cancel(true);
+		}
 	}
 }

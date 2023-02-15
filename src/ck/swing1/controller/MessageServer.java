@@ -69,7 +69,6 @@ class MessageIterator implements Iterator {
 		try {
 			Thread.sleep(1000); //to demo slow processing so that gui is locked. multi-threading in next commit ;-)
 		} catch (InterruptedException e) {
-			e.printStackTrace();
 		}
 		return iterator.next();
 	}
