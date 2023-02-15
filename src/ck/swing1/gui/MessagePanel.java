@@ -1,6 +1,7 @@
 package ck.swing1.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Window;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,8 +10,10 @@ import java.util.TreeSet;
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.JTree;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
@@ -32,6 +35,11 @@ public class MessagePanel extends JPanel implements ProgressDialogListener {
 	private MessageServer messageServer;
 	private ProgressDialog progressDialog;
 	private SwingWorker<List<Message>, Integer> worker;
+	
+	private TextPanel textPanel;
+	private JList<?> messageList;
+	private JSplitPane upperPane;
+	private JSplitPane lowerPane;
 	
 	public MessagePanel(JFrame parent) {
 		
@@ -78,7 +86,19 @@ public class MessagePanel extends JPanel implements ProgressDialogListener {
 		
 		setLayout(new BorderLayout());
 		
-		add(new JScrollPane(serverTree), BorderLayout.CENTER);
+		textPanel = new TextPanel();
+		messageList = new JList<>();
+		
+		lowerPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, messageList, textPanel);
+		upperPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new JScrollPane(serverTree), lowerPane);
+		
+		textPanel.setMinimumSize(new Dimension(0, 150));
+		messageList.setMinimumSize(new Dimension(0, 100));
+		
+		lowerPane.setResizeWeight(0.5);
+		upperPane.setResizeWeight(0.5);
+		
+		add(upperPane, BorderLayout.CENTER);
 		
 	}
 	

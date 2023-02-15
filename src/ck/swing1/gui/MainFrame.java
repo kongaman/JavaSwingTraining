@@ -27,7 +27,6 @@ import ck.swing1.controller.Controller;
 public class MainFrame extends JFrame{
 	
 	private Toolbar toolbar;
-	private TextPanel textPanel;
 	private FormPanel formPanel;
 	private JFileChooser fileChooser;
 	private Controller controller;
@@ -43,7 +42,6 @@ public class MainFrame extends JFrame{
 		setLayout(new BorderLayout());
 		
 		toolbar = new Toolbar();
-		textPanel = new TextPanel();
 		formPanel = new FormPanel();
 		tablePanel = new TablePanel();
 		prefsDialog = new PrefsDialog(this);
