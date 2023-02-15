@@ -67,7 +67,7 @@ class MessageIterator implements Iterator {
 	@Override
 	public Object next() {
 		try {
-			Thread.sleep(1000); //to demo slow processing so that gui is locked. multi-threading in next commit ;-)
+			Thread.sleep(500); //to demo slow processing so that gui is locked. multi-threading in next commit ;-)
 		} catch (InterruptedException e) {
 		}
 		return iterator.next();

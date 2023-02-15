@@ -1,6 +1,7 @@
 package ck.swing1.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -15,6 +16,7 @@ public class TextPanel extends JPanel {
 		
 		textArea = new JTextArea();
 		textArea.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		textArea.setFont(new Font(Font.SERIF, Font.PLAIN, 20)); //logical font -> Swing chooses a suitable font installed on your machine
 		
 		setLayout(new BorderLayout());
 		add(new JScrollPane(textArea), BorderLayout.CENTER);
