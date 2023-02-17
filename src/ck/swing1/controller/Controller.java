@@ -86,6 +86,10 @@ public class Controller {
 		db.load();
 	}
 	
+	public void configure(int port, String username, String password) throws Exception {
+		db.configure(port, username, password);
+	}
+	
 	public void disconnect() {
 		db.disconnect();
 	}

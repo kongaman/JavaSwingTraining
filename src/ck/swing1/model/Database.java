@@ -22,10 +22,25 @@ public class Database {
 	
 	private Connection conn;
 	
+	private int port;
+	private String user;
+	private String password;
+	
 	private List<Person> people;
 
 	public Database() {
 		people = new LinkedList<>();
+	}
+	
+	public void configure(int port, String user, String password) throws Exception {
+		this.port = port;
+		this.user = user;
+		this.password = password;
+		
+		if (conn != null) {
+			disconnect();
+			connect();
+		}
 	}
 	
 	public void connect() throws Exception {
@@ -33,10 +48,10 @@ public class Database {
 		if (conn != null) return;
 		
 		final String connectionUrl = "jdbc:mysql://localhost:3306/swingtest";
-		final String username = "root";
-		final String password = "I7P3meaTywhAHUxhlhro";
+//		final String username = "root";
+//		final String password = "I7P3meaTywhAHUxhlhro";
 
-		conn = DriverManager.getConnection(connectionUrl, username, password);
+		conn = DriverManager.getConnection(connectionUrl, user, password);
 		System.out.println("connected: " + conn);
 	}
 	
