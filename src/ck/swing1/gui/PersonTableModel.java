@@ -28,6 +28,8 @@ public class PersonTableModel extends AbstractTableModel {
 		switch(columnIndex) {
 		case 1:
 			return true;
+		case 5:
+			return true;
 		default:
 			return false;
 		}
@@ -40,6 +42,9 @@ public class PersonTableModel extends AbstractTableModel {
 		switch (columnIndex) {
 		case 1:
 			person.setName((String) value);
+			break;
+		case 5:
+			person.setUsCitizen((boolean) value);
 			break;
 		default:
 			return;
@@ -54,6 +59,28 @@ public class PersonTableModel extends AbstractTableModel {
 	@Override
 	public int getColumnCount() {
 		return 7;
+	}
+
+	@Override
+	public Class<?> getColumnClass(int columnIndex) {
+		switch(columnIndex) {
+		case 0:
+			return Integer.class;
+		case 1:
+			return String.class;
+		case 2:
+			return String.class;
+		case 3:
+			return String.class;
+		case 4:
+			return String.class;
+		case 5:
+			return Boolean.class;
+		case 6:
+			return String.class;
+		default:
+			return null;
+		}
 	}
 
 	@Override
