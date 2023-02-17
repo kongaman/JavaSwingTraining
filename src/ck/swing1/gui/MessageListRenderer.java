@@ -3,6 +3,7 @@ package ck.swing1.gui;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
+import java.awt.Font;
 
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -28,6 +29,8 @@ public class MessageListRenderer implements ListCellRenderer<Message> {
 		
 		panel = new JPanel();
 		label = new JLabel();
+		
+		label.setFont(Utils.createFont("/ck/swing1/fonts/Inkspot.ttf").deriveFont(Font.PLAIN, 15));
 		
 		selectedColor = new Color(210, 210, 255);
 		normalColor = Color.WHITE;
