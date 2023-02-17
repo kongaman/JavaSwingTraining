@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.prefs.Preferences;
 
+import javax.security.auth.Refreshable;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -120,13 +121,7 @@ public class MainFrame extends JFrame{
 
 			@Override
 			public void refreshEventOccured() {
-				connect();
-				try {
-					controller.load();
-				} catch (Exception e) {
-					JOptionPane.showMessageDialog(MainFrame.this, "Unable to load from database", "Database Problem", JOptionPane.ERROR_MESSAGE);
-				}
-				tablePanel.refresh();
+				refresh();
 			}
 		});
 		
@@ -149,6 +144,9 @@ public class MainFrame extends JFrame{
 		
 		add(toolbar, BorderLayout.PAGE_START);
 		add(splitPane, BorderLayout.CENTER);
+		
+		refresh();
+		
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setMinimumSize(new Dimension(500, 400));
 		setSize(1000, 500);
@@ -162,6 +160,20 @@ public class MainFrame extends JFrame{
 			JOptionPane.showMessageDialog(MainFrame.this, "Can't connect to database", "Database Connection Problem", JOptionPane.ERROR_MESSAGE);
 		}
 		
+	}
+	
+	private void refresh() {
+		try {
+			controller.connect();
+		} catch (Exception e1) {
+			JOptionPane.showMessageDialog(MainFrame.this, "Cannot connect to database", "Database Problem", JOptionPane.ERROR_MESSAGE);
+		}
+		try {
+			controller.load();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(MainFrame.this, "Unable to load from database", "Database Problem", JOptionPane.ERROR_MESSAGE);
+		}
+		tablePanel.refresh();
 	}
 	
 	private JMenuBar createMenuBar() {

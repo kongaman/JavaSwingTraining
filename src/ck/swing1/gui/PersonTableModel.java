@@ -22,6 +22,29 @@ public class PersonTableModel extends AbstractTableModel {
 	public String getColumnName(int columnIndex) {
 		return colNames[columnIndex];
 	}
+	
+	@Override
+	public boolean isCellEditable(int rowIndex, int columnIndex) {
+		switch(columnIndex) {
+		case 1:
+			return true;
+		default:
+			return false;
+		}
+	}
+	
+	@Override
+	public void setValueAt(Object value, int rowIndex, int columnIndex) {
+		if (db == null) return;
+		Person person = db.get(rowIndex);
+		switch (columnIndex) {
+		case 1:
+			person.setName((String) value);
+			break;
+		default:
+			return;
+		}
+	}
 
 	@Override
 	public int getRowCount() {
