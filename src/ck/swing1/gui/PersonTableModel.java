@@ -26,12 +26,22 @@ public class PersonTableModel extends AbstractTableModel {
 	
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		switch(columnIndex) {
-		case 1:
+//		switch(columnIndex) {
+//		case 1:
+//			return true;
+//		case 4:
+//			return true;
+//		case 5:
+//			return true;
+//		default:
+//			return false;
+//		}
+		switch(getColumnName(columnIndex)) {
+		case "Name":
 			return true;
-		case 4:
+		case "EmploymenCategory":
 			return true;
-		case 5:
+		case "US Citizen":
 			return true;
 		default:
 			return false;
