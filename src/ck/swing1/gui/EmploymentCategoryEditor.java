@@ -16,11 +16,16 @@ public class EmploymentCategoryEditor extends AbstractCellEditor implements Tabl
 	
 	public EmploymentCategoryEditor() {
 		combo = new JComboBox<EmploymentCategory>(EmploymentCategory.values());
-		
 	}
 
 	@Override
 	public Object getCellEditorValue() {
+		EmploymentCategory selectedItem = (EmploymentCategory) combo.getSelectedItem();
+		System.out.println("Short: " + selectedItem.getShortNumber());
+		System.out.println("Long: " + selectedItem.getLongText());
+		System.out.println("Name: " + selectedItem.name());
+		System.out.println("Ordinal: " + selectedItem.ordinal());
+		System.out.println("EmploymentCategory (toString auto-used): " + selectedItem);
 		return combo.getSelectedItem();
 	}
 

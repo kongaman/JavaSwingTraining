@@ -63,8 +63,6 @@ public class MainFrame extends JFrame{
 			}
 		});
 		
-		
-		
 		controller = new Controller();
 		
 		tablePanel.setData(controller.getPeople());

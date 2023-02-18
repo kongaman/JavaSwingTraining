@@ -10,7 +10,7 @@ import ck.swing1.model.EmploymentCategory;
 
 public class EmploymentCategoryRenderer implements TableCellRenderer {
 	
-	private JComboBox combo;
+	private JComboBox<EmploymentCategory> combo;
 	
 	public EmploymentCategoryRenderer() {
 		combo = new JComboBox<>(EmploymentCategory.values());
@@ -21,8 +21,6 @@ public class EmploymentCategoryRenderer implements TableCellRenderer {
 			int row, int column) {
 		
 		combo.setSelectedItem(value);
-		
 		return combo;
 	}
-
 }

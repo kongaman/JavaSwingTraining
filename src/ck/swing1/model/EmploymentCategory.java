@@ -1,21 +1,29 @@
 package ck.swing1.model;
 
 public enum EmploymentCategory {
-	employed("employed"),
-	selfEmployed("self employed"),
-	unemployed("unemployed"),
-	other("other");
+	employed("employed", "10"),
+	selfEmployed("self employed", "20"),
+	unemployed("unemployed", "30"),
+	other("other", "99");
 	
-	private String text;
+	private String longText;
+	private String shortNumber;
 	
-	private EmploymentCategory(String text) {
-		this.text = text;
+	private EmploymentCategory(String longText, String shortNumber) {
+		this.longText = longText;
+		this.shortNumber = shortNumber;
 	}
 
-	@Override
-	public String toString() {
-		return text;
+	public String getLongText() {
+		return longText;
+	}
+
+	public String getShortNumber() {
+		return shortNumber;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return shortNumber + " - " + longText;
+	}
 }
